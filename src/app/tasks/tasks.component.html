@@ -1,0 +1,37 @@
+<div class="tasks">
+  <form (submit)="addTask()" [formGroup]="taskForm">
+    <input
+      type="text"
+      name="inputTask"
+      placeholder="Enter a Task"
+      formControlName="inputTask"
+      class="task-input"
+      [(ngModel)]="inputTask"
+    />
+    <input type="submit" value="Add Task" [disabled]="taskForm.invalid" />
+  </form>
+  <div
+    *ngFor="let task of tasks; let i = index"
+    class="task {{ task.status ? 'done' : '' }}"
+  >
+    <div class="content" (click)="taskCompleted(i); moveTask(i)">
+      <div class="text">
+        {{ task.content }}
+      </div>
+      <div class="icons">
+        <fa-icon
+          class="icon {{ task.status ? 'done' : '' }} check"
+          [icon]="faCheck"
+        ></fa-icon>
+        <fa-icon
+          [icon]="faXmark"
+          class="delete"
+          (click)="deleteTask(i)"
+        ></fa-icon>
+      </div>
+    </div>
+    <p>
+      {{ myDate | date: "medium" }}
+    </p>
+  </div>
+</div>
